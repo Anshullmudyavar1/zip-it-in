@@ -74,7 +74,7 @@ function Index() {
   );
 }
 
-function Stat({ label, value, color }: { label: string; value: string; color: "blue" | "red" | "yellow" | "green" }) {
+function Stat({ label, value, sub, color }: { label: string; value: string; sub?: string; color: "blue" | "red" | "yellow" | "green" }) {
   const c = {
     blue: "text-google-blue",
     red: "text-google-red",
@@ -85,6 +85,7 @@ function Stat({ label, value, color }: { label: string; value: string; color: "b
     <div className="rounded-xl border bg-card p-4">
       <div className="text-xs uppercase tracking-wider text-muted-foreground">{label}</div>
       <div className={`mt-1 text-2xl font-bold tabular-nums ${c}`}>{value}</div>
+      {sub && <div className="mt-1 text-[10px] text-muted-foreground">{sub}</div>}
     </div>
   );
 }
