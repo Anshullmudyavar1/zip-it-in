@@ -13,10 +13,17 @@ export const Route = createFileRoute("/inference")({
   component: InferencePage,
 });
 
-const SAMPLES = [
-  "Which film director starred in the movie that won Best Picture in 1994?",
-  "What is the capital of the country where the Eiffel Tower is located?",
-  "Who founded the company that owns the cloud platform hosting MongoDB Atlas?",
+const SAMPLES: { q: string; tag: string }[] = [
+  { q: "Which film director starred in the movie that won Best Picture in 1994?", tag: "Bridge entity" },
+  { q: "What is the capital of the country where the Eiffel Tower is located?", tag: "Geographic hop" },
+  { q: "Who founded the company that owns the cloud platform hosting MongoDB Atlas?", tag: "Corporate chain" },
+  { q: "Which university did the author of 'A Brief History of Time' attend for his PhD?", tag: "Biographical" },
+  { q: "What year was the band that performed 'Bohemian Rhapsody' originally formed?", tag: "Temporal" },
+  { q: "Which river flows through the city that hosted the 1992 Summer Olympics?", tag: "Comparison" },
+  { q: "Who wrote the novel that inspired the film directed by Stanley Kubrick in 1980?", tag: "Multi-hop" },
+  { q: "What is the primary language spoken in the country bordering Brazil to the west?", tag: "Geographic" },
+  { q: "Which scientist discovered the element named after the country of Poland?", tag: "Entity bridge" },
+  { q: "What position did the player who scored the winning goal in the 2014 World Cup final play?", tag: "Sports" },
 ];
 
 type Stage = "idle" | "hybrid" | "memory" | "rerank" | "done";
