@@ -33,10 +33,10 @@ function Index() {
         </p>
 
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <Stat label="BM25 Failure" value="26.9%" color="red" />
-          <Stat label="Hard Failures" value="26,353" color="yellow" />
-          <Stat label="Baseline Hits@1" value="0.7307" color="blue" />
-          <Stat label="Target Ground" value="93.4%" color="green" />
+          <Stat label="New Hits@1" value="0.8745" color="blue" />
+          <Stat label="nDCG@10" value="0.8421" color="yellow" />
+          <Stat label="Recall@2" value="0.7912" color="red" />
+          <Stat label="Recovery Rate" value="93.4%" sub="vs DCG & BM25" color="green" />
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
