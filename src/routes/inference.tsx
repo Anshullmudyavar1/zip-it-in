@@ -60,7 +60,8 @@ function metricsFor(q: string, useMemory: boolean) {
 }
 
 function InferencePage() {
-  const [query, setQuery] = useState(SAMPLES[0]);
+  const [queryIdx, setQueryIdx] = useState(0);
+  const query = SAMPLES[queryIdx].q;
   const [useMemory, setUseMemory] = useState(true);
   const [stage, setStage] = useState<Stage>("idle");
   const [shownStages, setShownStages] = useState<Stage[]>([]);
@@ -89,31 +90,42 @@ function InferencePage() {
         </div>
         <h1 className="mt-1 font-display text-4xl font-bold tracking-tight">Inference</h1>
         <p className="mt-2 max-w-2xl text-muted-foreground">
-          Submit a query and watch it flow through hybrid retrieval, Atlas episodic memory, and the
-          distilled cross-encoder reranker.
+          Pick one of 10 representative HotpotQA-style queries and watch it flow through hybrid
+          retrieval, Atlas episodic memory, and the distilled cross-encoder reranker.
         </p>
 
         {/* Input */}
         <div className="mt-8 rounded-xl border bg-card p-5">
           <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Query
+            Select a query
           </label>
-          <textarea
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            rows={2}
-            className="mt-2 w-full resize-none rounded-md border bg-background p-3 text-sm focus:outline-none focus:ring-2 focus:ring-google-blue"
-          />
-          <div className="mt-3 flex flex-wrap gap-2">
-            {SAMPLES.map((s, i) => (
-              <button
-                key={i}
-                onClick={() => setQuery(s)}
-                className="rounded-full border px-3 py-1 text-xs text-muted-foreground hover:bg-accent"
-              >
-                Sample {i + 1}
-              </button>
-            ))}
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            {SAMPLES.map((s, i) => {
+              const active = i === queryIdx;
+              return (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setQueryIdx(i);
+                    setStage("idle");
+                    setShownStages([]);
+                  }}
+                  className={`rounded-lg border p-3 text-left text-sm transition ${
+                    active
+                      ? "border-google-blue bg-google-blue/5 shadow-sm"
+                      : "border-border bg-background hover:bg-accent"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono text-[10px] text-muted-foreground">Q{i + 1}</span>
+                    <span className="rounded-full border px-2 py-0.5 text-[10px] text-muted-foreground">
+                      {s.tag}
+                    </span>
+                  </div>
+                  <div className="mt-1 leading-snug">{s.q}</div>
+                </button>
+              );
+            })}
           </div>
           <div className="mt-4 flex items-center justify-between gap-4 flex-wrap">
             <label className="flex items-center gap-2 text-sm">
